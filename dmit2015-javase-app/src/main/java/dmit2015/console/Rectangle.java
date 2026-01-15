@@ -1,6 +1,12 @@
 package dmit2015.console;
 
-public class Rectangle {
+/**
+ * This class models a Rectangle shape.
+ *
+ * @author Sam Wu
+ * @version 2026.01.15
+ */
+public class Rectangle implements Shape {
 
     // Define read-only fields
     private final double length;
@@ -22,10 +28,12 @@ public class Rectangle {
         return width;
     }
 
+    @Override
     public double getArea() {
         return length * width;
     }
 
+    @Override
     public double getPerimeter() {
         return 2 * (length + width);
     }
