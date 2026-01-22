@@ -1,0 +1,59 @@
+<!-- This is a Faces composition page that extends the layout template -->
+<ui:composition
+        template="/WEB-INF/faces-templates/layout.xhtml"
+        xmlns:ui="jakarta.faces.facelets"
+        xmlns:h="jakarta.faces.html"
+        xmlns:f="jakarta.faces.core"
+        xmlns:p="primefaces"
+        xmlns:o="http://omnifaces.org/ui">
+
+    <!-- Page metadata for title, description, and keywords -->
+    <ui:param name="title" value="signIn"/>
+
+    <!-- Define main content for the page -->
+    <ui:define name="maincontent">
+        <div class="card">
+            <h1 role="heading" aria-level="1">Sign In</h1>
+            <h:form id="signIn_form" role="form">
+                <p:panel header="Welcome to Sign In">
+                    <!-- Add page-specific content here, e.g., PrimeFaces components -->
+                    <div class="ui-fluid">
+
+                        <div class="field">
+                            <p:outputLabel for="@next" >Username</p:outputLabel>
+                            <p:inputText id="username"
+                                         value="#{signInView.username}"/>
+                        </div>
+
+                        <div class="field">
+                            <p:outputLabel for="@next" >Password</p:outputLabel>
+                            <p:password id="password"
+                                         value="#{signInView.password}"/>
+                        </div>
+
+                        <div class="formgroup-inline">
+                            <div class="field">
+                                <p:commandButton value="Submit"
+                                                 action="#{signInView.onSignIn()}"
+                                                 update=":messages :growl @form"
+                                >
+                                </p:commandButton>
+                            </div>
+
+                            <div class="field">
+                                <p:commandButton value="Clear"
+                                                 action="#{signInView.onClear()}"
+                                                 update="@form"
+                                                 styleClass="ui-button-secondary"
+                                >
+                                </p:commandButton>
+                            </div>
+                        </div>
+
+                    </div>
+                </p:panel>
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

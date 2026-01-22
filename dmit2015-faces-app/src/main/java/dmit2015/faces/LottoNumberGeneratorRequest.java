@@ -25,7 +25,7 @@ public class LottoNumberGeneratorRequest {
 
     @Getter @Setter
     @Min(value = 3, message = "Max value must be 3 or more")
-    private int maxValue;
+    private int maxValue = 49;
 
     @PostConstruct // Runs after @Inject is completed, once per request for this bean
     public void init() {
