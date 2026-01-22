@@ -1,0 +1,61 @@
+<!-- This is a JSF composition page that extends the layout template -->
+<ui:composition
+        template="/WEB-INF/faces-templates/layout.xhtml"
+        xmlns:ui="jakarta.faces.facelets"
+        xmlns:h="jakarta.faces.html"
+        xmlns:f="jakarta.faces.core"
+        xmlns:p="primefaces"
+        xmlns:o="http://omnifaces.org/ui">
+
+    <!-- Page metadata for title, description, and keywords -->
+    <ui:param name="title" value="lotto-number-generator2"/>
+    <ui:param name="description" value="Description for lotto-number-generator2 page"/>
+    <ui:param name="keywords" value="jakarta, jsf, primefaces, lotto-number-generator2"/>
+
+    <!-- === Main Content Section === -->
+    <!-- Defines the primary content area rendered in the layout's <ui:insert name="maincontent"> -->
+    <ui:define name="maincontent">
+        <div class="card">
+            <h1 role="heading" aria-level="1">Lotto Number Generator</h1>
+
+            <h:form id="lotto-number-generator2_form" role="form">
+                <!-- Optional: Set focus on the first input field -->
+                <!-- <p:focus for=":textValue" /> -->
+
+                <p:panel id="formPanel" header="Welcome to Lotto Number Generator" role="region"
+                         aria-label="Form Input Panel">
+                    <div class="ui-fluid">
+
+                        <!-- === Form Input Components === -->
+
+                        <div class="field">
+                            <p:outputLabel for="@next" value="Max Number"/>
+                            <p:inputText id="maxValue" value="#{lottoNumberGeneratorRequest.maxValue}"/>
+                        </div>
+
+                        <!-- Buttons for form submission and clearing -->
+
+                        <div class="formgroup-inline">
+                            <div class="field">
+                                <p:commandButton value="Submit"
+                                                 action="#{lottoNumberGeneratorRequest.onSubmit}"
+                                                 update=":messages :growl @form "/>
+                            </div>
+                            <div class="field">
+                                <p:commandButton value="Clear"
+                                                 action="#{lottoNumberGeneratorRequest.onClear}"
+                                                 update="@form :outputPanel"
+                                                 process="@this"
+                                                 styleClass="ui-button-secondary"/>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </p:panel>
+            </h:form>
+
+        </div>
+    </ui:define>
+
+</ui:composition>
