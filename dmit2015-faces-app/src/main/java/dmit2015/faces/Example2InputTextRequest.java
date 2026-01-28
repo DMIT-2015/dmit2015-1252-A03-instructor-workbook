@@ -27,7 +27,7 @@ public class Example2InputTextRequest {
     @Getter
     @Setter
     @NotBlank(message = "Input value is required")
-    @Size(min=3, message = "Input value must contain {min} or more characters")
+    @Size(min=2, message = "Input value must contain {min} or more characters")
     private String userInput;
 
     public void onSubmit() {

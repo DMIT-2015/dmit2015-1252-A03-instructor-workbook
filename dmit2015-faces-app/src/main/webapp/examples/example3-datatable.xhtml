@@ -17,6 +17,29 @@
             <h:form id="example3-datatable_form" role="form">
                 <p:panel header="Welcome to Example 3 – InputText, DataTable, and CommandButton ">
                     <!-- Add page-specific content here, e.g., PrimeFaces components -->
+                    <div class="field">
+                        <p:outputLabel for="@next">Task</p:outputLabel>
+                        <p:inputText id="description"
+                                     value="#{example3DataTableView.newTask.description}"
+                        />
+                        <p:message for="description" />
+                    </div>
+                    <div class="field">
+                        <p:outputLabel for="@next">Priority</p:outputLabel>
+                        <p:selectOneMenu id="priority"
+                                         value="#{example3DataTableView.newTask.priority}">
+                            <f:selectItem itemLabel="-- select priority --" itemValue="" />
+                            <f:selectItem itemLabel="Low" itemValue="Low" />
+                            <f:selectItem itemLabel="Medium" itemValue="Medium" />
+                            <f:selectItem itemLabel="High" itemValue="High" />
+                        </p:selectOneMenu>
+                    </div>
+
+                    <p:commandButton id="addTaskButton"
+                                     value="Add Task"
+                                     actionListener="#{example3DataTableView.onSubmitAddTask()}"
+                                     update="@form"
+                                     />
 
                     <p:dataTable id="taskTable"
                                 value="#{example3DataTableView.tasks}"
@@ -24,11 +47,16 @@
                         <p:column headerText="Task">
                             <h:outputText value="#{currentTask.description}" />
                         </p:column>
+                        <p:column headerText="Priority">
+                            <h:outputText value="#{currentTask.priority}" />
+                        </p:column>
+                        <p:column headerText="Done">
+                            <p:selectBooleanCheckbox value="#{currentTask.done}" readonly="true" />
+                        </p:column>
                         <p:column headerText="Action">
                             <p:commandButton value="delete"
                                              actionListener="#{example3DataTableView.onRemoveTask(currentTask)}"
                                              update="taskTable"
-                                             immediate="true"
                                              process="@this"
                                              >
                                 <p:confirm type="popup"

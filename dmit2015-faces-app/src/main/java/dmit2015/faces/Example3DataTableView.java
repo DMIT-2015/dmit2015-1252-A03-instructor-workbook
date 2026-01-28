@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.random.RandomGenerator;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -40,14 +41,17 @@ public class Example3DataTableView implements Serializable {
     public void init() {
         // Seed the list of tasks with 5 random tasks
         var faker = new Faker();
+        String[] priorities = {"Low","Medium","High"};
         for (int count = 1; count <= 5; count++) {
             Task currentTask = new Task();
             currentTask.setDescription("Nuke " + faker.fallout().location());
+            currentTask.setPriority(priorities[RandomGenerator.getDefault().nextInt(priorities.length)]);
+            currentTask.setDone(faker.bool().bool());
             tasks.add(currentTask);
         }
     }
 
-    public void onSubmit() {
+    public void onSubmitAddTask() {
         try {
             // Add newTask to our list of tasks
             tasks.add(newTask);
