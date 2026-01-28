@@ -34,6 +34,9 @@ public class Example3DataTableView implements Serializable {
     private List<Task> tasks = new ArrayList<>();
 
     @Getter
+    private List<Task> completedTasks = new ArrayList<>();
+
+    @Getter
     @Setter
     private Task newTask = new Task();
 
@@ -47,7 +50,12 @@ public class Example3DataTableView implements Serializable {
             currentTask.setDescription("Nuke " + faker.fallout().location());
             currentTask.setPriority(priorities[RandomGenerator.getDefault().nextInt(priorities.length)]);
             currentTask.setDone(faker.bool().bool());
-            tasks.add(currentTask);
+
+            if (currentTask.isDone()) {
+                completedTasks.add(currentTask);
+            } else {
+                tasks.add(currentTask);
+            }
         }
     }
 
@@ -70,7 +78,17 @@ public class Example3DataTableView implements Serializable {
     }
 
     public void onRemoveTask(Task selectedTask) {
+        completedTasks.remove(selectedTask);
+    }
+    public void onDoneTask(Task selectedTask) {
+        selectedTask.setDone(true);
+        completedTasks.add(selectedTask);
         tasks.remove(selectedTask);
+    }
+    public void onUndoneTask(Task selectedTask) {
+        selectedTask.setDone(false);
+        tasks.add(selectedTask);
+        completedTasks.remove(selectedTask);
     }
 
     /**

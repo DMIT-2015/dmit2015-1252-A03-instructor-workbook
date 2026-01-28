@@ -38,7 +38,7 @@
                     <p:commandButton id="addTaskButton"
                                      value="Add Task"
                                      actionListener="#{example3DataTableView.onSubmitAddTask()}"
-                                     update="@form"
+                                     update="@form:taskTable @form:description"
                                      />
 
                     <p:dataTable id="taskTable"
@@ -54,11 +54,40 @@
                             <p:selectBooleanCheckbox value="#{currentTask.done}" readonly="true" />
                         </p:column>
                         <p:column headerText="Action">
-                            <p:commandButton value="delete"
-                                             actionListener="#{example3DataTableView.onRemoveTask(currentTask)}"
-                                             update="taskTable"
+                            <p:commandButton value="Done"
+                                             actionListener="#{example3DataTableView.onDoneTask(currentTask)}"
+                                             update="@form:taskTable @form:completedTaskTable"
                                              process="@this"
                                              >
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:dataTable id="completedTaskTable"
+                                 value="#{example3DataTableView.completedTasks}"
+                                 var="currentTask">
+                        <p:column headerText="Task" >
+                            <h:outputText value="#{currentTask.description}"
+                                          style="text-decoration: line-through; color: red;"/>
+                        </p:column>
+                        <p:column headerText="Priority" >
+                            <h:outputText value="#{currentTask.priority}" />
+                        </p:column>
+                        <p:column headerText="Done">
+                            <p:selectBooleanCheckbox value="#{currentTask.done}" readonly="true" />
+                        </p:column>
+                        <p:column headerText="Action">
+                            <p:commandButton value="Undone"
+                                             actionListener="#{example3DataTableView.onUndoneTask(currentTask)}"
+                                             update="@form:completedTaskTable @form:taskTable"
+                                             process="@this"
+                                             />
+                            <p:commandButton value="delete"
+                                             styleClass="ui-button-danger"
+                                             actionListener="#{example3DataTableView.onRemoveTask(currentTask)}"
+                                             update="@form:completedTaskTable"
+                                             process="@this"
+                            >
                                 <p:confirm type="popup"
                                            header="Confirmation"
                                            message="Are you sure you want to delete this record?"
