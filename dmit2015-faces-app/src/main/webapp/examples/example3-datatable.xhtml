@@ -51,16 +51,21 @@
                             <h:outputText value="#{currentTask.priority}" />
                         </p:column>
                         <p:column headerText="Done">
-                            <p:selectBooleanCheckbox value="#{currentTask.done}" readonly="true" />
+                            <p:selectBooleanCheckbox value="#{currentTask.done}" >
+                                <p:ajax listener="#{example3DataTableView.onDoneTask(currentTask)}"
+                                        process="@this"
+                                        update="@form:taskTable @form:completedTaskTable"
+                                />
+                            </p:selectBooleanCheckbox>
                         </p:column>
-                        <p:column headerText="Action">
-                            <p:commandButton value="Done"
-                                             actionListener="#{example3DataTableView.onDoneTask(currentTask)}"
-                                             update="@form:taskTable @form:completedTaskTable"
-                                             process="@this"
-                                             >
-                            </p:commandButton>
-                        </p:column>
+<!--                        <p:column headerText="Action">-->
+<!--                            <p:commandButton value="Done"-->
+<!--                                             actionListener="#{example3DataTableView.onDoneTask(currentTask)}"-->
+<!--                                             update="@form:taskTable @form:completedTaskTable"-->
+<!--                                             process="@this"-->
+<!--                                             >-->
+<!--                            </p:commandButton>-->
+<!--                        </p:column>-->
                     </p:dataTable>
 
                     <p:dataTable id="completedTaskTable"
@@ -74,14 +79,19 @@
                             <h:outputText value="#{currentTask.priority}" />
                         </p:column>
                         <p:column headerText="Done">
-                            <p:selectBooleanCheckbox value="#{currentTask.done}" readonly="true" />
+                            <p:selectBooleanCheckbox value="#{currentTask.done}" >
+                                <p:ajax listener="#{example3DataTableView.onUndoneTask(currentTask)}"
+                                        process="@this"
+                                        update="@form:completedTaskTable @form:taskTable"
+                                />
+                            </p:selectBooleanCheckbox>
                         </p:column>
                         <p:column headerText="Action">
-                            <p:commandButton value="Undone"
-                                             actionListener="#{example3DataTableView.onUndoneTask(currentTask)}"
-                                             update="@form:completedTaskTable @form:taskTable"
-                                             process="@this"
-                                             />
+<!--                            <p:commandButton value="Undone"-->
+<!--                                             actionListener="#{example3DataTableView.onUndoneTask(currentTask)}"-->
+<!--                                             update="@form:completedTaskTable @form:taskTable"-->
+<!--                                             process="@this"-->
+<!--                                             />-->
                             <p:commandButton value="delete"
                                              styleClass="ui-button-danger"
                                              actionListener="#{example3DataTableView.onRemoveTask(currentTask)}"
