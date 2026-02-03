@@ -1,0 +1,40 @@
+// Firebase Realtime Database stores JSON data in a JSON Tree structure
+
+### Push new JSON data to the path
+POST https://dmit2015-1252-a03-swu-default-rtdb.europe-west1.firebasedatabase.app/Task.json
+Content-Type: application/json
+
+{
+  "description": "Create Assignment 1 project",
+  "priority": "High",
+  "done": false
+}
+
+### Read JSON data by path
+GET https://dmit2015-1252-a03-swu-default-rtdb.europe-west1.firebasedatabase.app/Task.json
+
+### Read JSON data by path and primary key value
+@primaryKeyValue = -OkZHoTlQ6tJrqz6MMCY
+GET https://dmit2015-1252-a03-swu-default-rtdb.europe-west1.firebasedatabase.app/Task/{{primaryKeyValue}}.json
+
+### Write JSON data - will replace all properties with the properties in the request body - if you miss a property it will be removed
+PUT https://dmit2015-1252-a03-swu-default-rtdb.europe-west1.firebasedatabase.app/Task/{{primaryKeyValue}}.json
+Content-Type: application/json
+
+{
+  "description": "Commit and push Assignment 1 project",
+  "done": true,
+  "priority": "Medium"
+}
+
+### Remove JSON data - use this if you want to delete data
+@deletePrimaryKeyValue = -OkZHqk3AFaoJQarC_lB
+DELETE https://dmit2015-1252-a03-swu-default-rtdb.europe-west1.firebasedatabase.app/Task/{{deletePrimaryKeyValue}}.json
+
+### Update data - use this if you want to update some of the properties but not all of them
+PATCH https://dmit2015-1252-a03-swu-default-rtdb.europe-west1.firebasedatabase.app/Task/{{primaryKeyValue}}.json
+Content-Type: application/json
+
+{
+  "done": "false"
+}
