@@ -14,7 +14,7 @@ Content-Type: application/json
 GET https://dmit2015-1252-a03-swu-default-rtdb.europe-west1.firebasedatabase.app/Task.json
 
 ### Read JSON data by path and primary key value
-@primaryKeyValue = -OkZHoTlQ6tJrqz6MMCY
+@primaryKeyValue = -Okdfi-i_sDZ27Z9_E8U
 GET https://dmit2015-1252-a03-swu-default-rtdb.europe-west1.firebasedatabase.app/Task/{{primaryKeyValue}}.json
 
 ### Write JSON data - will replace all properties with the properties in the request body - if you miss a property it will be removed
