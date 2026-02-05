@@ -1,6 +1,7 @@
 package dmit2015.faces;
 
 import dmit2015.model.Task;
+import dmit2015.model.TaskPriority;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
@@ -44,7 +45,8 @@ public class Example3DataTableView implements Serializable {
     public void init() {
         // Seed the list of tasks with 5 random tasks
         var faker = new Faker();
-        String[] priorities = {"Low","Medium","High"};
+//        String[] priorities = {"Low","Medium","High"};
+        TaskPriority[] priorities = TaskPriority.values();
         for (int count = 1; count <= 5; count++) {
             Task currentTask = new Task();
             currentTask.setDescription("Nuke " + faker.fallout().location());

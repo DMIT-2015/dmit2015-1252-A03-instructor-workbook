@@ -1,6 +1,7 @@
 package dmit2015.model;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -22,13 +23,17 @@ public class Task {
     @Size(min=3,max=100,message = "Task description must contain {min} and {max} characters")
     private String description;
 
-    @Pattern(regexp = "^(Low|Medium|High)$", message = "Priority must be Low, Medium, or High")
-    private String priority;    // Low,Medium,High
+//    @Pattern(regexp = "^(Low|Medium|High)$", message = "Priority must be Low, Medium, or High")
+//    private String priority;    // Low,Medium,High
+    @NotNull(message = "Priority must be Low, Medium, or High")
+    private TaskPriority priority;
 
     private boolean done;
 
     public static Task of(Faker faker) {
-        String[] priorities = {"Low","Medium","High"};
+//        String[] priorities = {"Low","Medium","High"};
+        TaskPriority[] priorities = TaskPriority.values();
+
         Task currentTask = new Task();
         currentTask.setId(UUID.randomUUID().toString());
         currentTask.setDescription("Nuke " + faker.fallout().location());

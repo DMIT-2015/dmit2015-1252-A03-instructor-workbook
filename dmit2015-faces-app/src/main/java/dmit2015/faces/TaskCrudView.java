@@ -1,6 +1,7 @@
 package dmit2015.faces;
 
 import dmit2015.model.Task;
+import dmit2015.model.TaskPriority;
 import dmit2015.service.TaskService;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
@@ -25,9 +26,14 @@ import java.util.List;
 @ViewScoped // create this object for one HTTP request and keep in memory if the next is for the same page
 public class TaskCrudView implements Serializable {
 
+    public TaskPriority[] getTaskPriorites() {
+        return TaskPriority.values();
+    }
+
     @Inject
 //    @Named("memoryTaskService")
-    @Named("firebaseHttpClientTaskService")
+//    @Named("firebaseHttpClientTaskService")
+    @Named("firebaseMultiTenantHttpClientTaskService")
     private TaskService taskService;
 
     /**

@@ -120,10 +120,17 @@
                             </div>
                             <div class="field">
                                 <p:outputLabel for="@next">Priority</p:outputLabel>
-                                <p:inputText
+                                <p:selectOneMenu
                                         id="priority"
                                         value="#{currentTaskCrudView.selectedTask.priority}">
-                                </p:inputText>
+                                    <f:selectItem itemLabel="--select a priority"
+                                                  itemValue="" />
+                                    <f:selectItems value="#{currentTaskCrudView.taskPriorites}"
+                                                   var="currentTaskPriority"
+                                                   itemValue="#{currentTaskPriority}"
+                                                   itemLabel="#{currentTaskPriority}"
+                                                   />
+                                </p:selectOneMenu>
                                 <p:message for="priority" />
                             </div>
                             <div class="field">
