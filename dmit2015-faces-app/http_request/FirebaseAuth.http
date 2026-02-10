@@ -3,9 +3,17 @@ POST https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={
 Content-Type: application/json
 
 {
-  "email": "user02@dmit2015.ca",
+  "email": "user01@dmit2015.ca",
   "password": "Password2015",
   "returnSecureToken": true
 }
 
-###
+### HTTP Request to sign in
+POST https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={{API_KEY}}
+Content-Type: application/json
+
+{
+  "email": "user02@dmit2015.ca",
+  "password": "Password2015",
+  "returnSecureToken": true
+}

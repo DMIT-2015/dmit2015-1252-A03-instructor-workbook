@@ -1,0 +1,15 @@
+// Firebase Realtime Database stores JSON data in a JSON Tree structure
+
+### Permission denied with this request as it is missing auth query parameter
+GET https://dmit2015-1252-a03-swu-default-rtdb.europe-west1.firebasedatabase.app/multi_tenant_data/Task.json
+
+### Pass `auth` query parameter with an `idToken` value to gain access
+// "localId": ""
+// "idToken": "",
+@id1Token =
+@user1Id =
+GET https://dmit2015-1252-a03-swu-default-rtdb.europe-west1.firebasedatabase.app/multi_tenant_data/Task/{{user1Id}}.json?auth={{id1Token}}
+
+### User2 should be able to read user1 data
+@id2Token =
+GET https://dmit2015-1252-a03-swu-default-rtdb.europe-west1.firebasedatabase.app/multi_tenant_data/Task/{{user1Id}}.json?auth={{id2Token}}
