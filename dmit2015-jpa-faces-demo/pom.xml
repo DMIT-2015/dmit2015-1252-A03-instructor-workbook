@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>25</maven.compiler.target>
         <maven.compiler.source>25</maven.compiler.source>
-        <junit.version>6.0.2</junit.version>
+        <junit.version>5.14.2</junit.version>
     </properties>
 
     <dependencies>
@@ -98,7 +98,7 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>9.2.0</version>
+            <version>9.6.0</version>
         </dependency>
 
         <dependency>
@@ -106,8 +106,6 @@
             <artifactId>mariadb-java-client</artifactId>
             <version>3.5.3</version>
         </dependency>
-
-
 
         <!-- Arquillian allows you to test enterprise code such as EJBs and Transactional(JTA)
                    JPA from JUnit/TestNG -->
@@ -174,8 +172,6 @@
             <scope>test</scope>
         </dependency>
 
-
-
     </dependencies>
 
     <build>
@@ -185,6 +181,83 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.4.0</version>
             </plugin>
+
+            <!-- Plugin to provision a server using Galleon, package your application in Galleon provisioned server,
+            deploy, redeploy, undeploy or run your application.  -->
+            <!--https://docs.wildfly.org/wildfly-glow/ -->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>5.1.5.Final</version>
+
+                <configuration>
+                    <feature-packs>
+                        <feature-pack>
+                            <location>wildfly@maven(org.jboss.universe:community-universe)#39.0.0.Final</location>
+                        </feature-pack>
+                    </feature-packs>
+                    <!-- deploys the app on root web context -->
+                    <name>ROOT.war</name>
+                    <!-- Enable debugging -->
+                    <!-- https://www.jetbrains.com/help/idea/attaching-to-local-process.html#attach-to-local -->
+                    <!-- To attach a debugger to the running server from IntelliJ IDEA
+                        1. From the main menu, choose `Run | Attach to Process`
+                        2. IntelliJ IDEA will show the list of running local processes.
+                            Select the process with the `jboss-module.jar (8787)` name to attach to.
+                    -->
+                    <debug>true</debug>
+                    <debugPort>8787</debugPort>
+                    <debugSuspend>false</debugSuspend>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.1</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.42</version>
+                        </path>
+                        <path>
+                            <groupId>org.hibernate.orm</groupId>
+                            <artifactId>hibernate-jpamodelgen</artifactId>
+                            <version>6.6.42.Final</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+            <!-- Plugin to run unit tests-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.3</version>
+                <configuration>
+                    <argLine>-Xmx1024m</argLine>
+                </configuration>
+            </plugin>
+
+            <!-- Plugin to run functional tests -->
+            <!--  mvn failsafe:integration-test -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.5.3</version>
+            </plugin>
+
+
         </plugins>
     </build>
 </project>

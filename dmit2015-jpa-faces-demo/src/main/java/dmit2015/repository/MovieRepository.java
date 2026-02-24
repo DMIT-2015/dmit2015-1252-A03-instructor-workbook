@@ -1,5 +1,3 @@
-
-
 package dmit2015.repository;
 
 import dmit2015.entity.Movie;
@@ -13,7 +11,8 @@ import java.util.Optional;
 
 @ApplicationScoped
 public class MovieRepository {
-    @PersistenceContext //(unitName = "h2database-jpa-pu") // unitName is optional if persistence.xml contains only one persistence-unit
+    
+    @PersistenceContext (unitName = "mssql-dmit2015-jpa-pu") // unitName is optional if persistence.xml contains only one persistence-unit
     private EntityManager em;
 
     @Transactional
@@ -23,9 +22,9 @@ public class MovieRepository {
 
     @Transactional
     public void update(Movie updatedMovie) {
-        Optional<Movie> optionalMovie = findOptionalById(updatedMovie.getId());
-        if (optionalMovie.isPresent()) {
-            Movie existingMovie = optionalMovie.orElseThrow();
+        Optional<Movie> maybeMovie = findOptionalById(updatedMovie.getId());
+        if (maybeMovie.isPresent()) {
+            Movie existingMovie = maybeMovie.orElseThrow();
             existingMovie.setTitle(updatedMovie.getTitle());
             existingMovie.setGenre(updatedMovie.getGenre());
             existingMovie.setPrice(updatedMovie.getPrice());
@@ -45,9 +44,9 @@ public class MovieRepository {
 
     @Transactional
     public void deleteById(Long id) {
-        Optional<Movie> optionalMovie = findOptionalById(id);
-        if (optionalMovie.isPresent()) {
-            Movie existingMovie = optionalMovie.orElseThrow();
+        Optional<Movie> maybeMovie = findOptionalById(id);
+        if (maybeMovie.isPresent()) {
+            Movie existingMovie = maybeMovie.orElseThrow();
             em.remove(existingMovie);
         }
     }

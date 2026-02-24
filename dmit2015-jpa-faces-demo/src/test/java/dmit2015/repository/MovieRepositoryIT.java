@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ArquillianTest
-class MovieRepositoryIT {
+public class MovieRepositoryIT {
 
     @Inject
     private MovieRepository movieRepository;
@@ -64,7 +64,7 @@ class MovieRepositoryIT {
         // Assert
         assertEquals(4, movies.size());
 
-        Movie first = movies.get(0);
+        Movie first = movies.getFirst();
         assertAll("first movie",
                 () -> assertEquals("When Harry Met Sally", first.getTitle()),
                 () -> assertEquals("Romantic Comedy", first.getGenre()),
@@ -73,7 +73,7 @@ class MovieRepositoryIT {
                 () -> assertEquals(LocalDate.parse("1989-02-12"), first.getReleaseDate())
         );
 
-        Movie last = movies.get(movies.size() - 1);
+        Movie last = movies.getLast();
         assertAll("last movie",
                 () -> assertEquals("Rio Bravo", last.getTitle()),
                 () -> assertEquals("Western", last.getGenre()),
