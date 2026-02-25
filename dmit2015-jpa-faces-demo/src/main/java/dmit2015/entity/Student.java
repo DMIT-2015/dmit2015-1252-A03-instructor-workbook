@@ -5,17 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import net.datafaker.Faker;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.random.RandomGenerator;
 
 /**
  * This Jakarta Persistence class is mapped to a relational database table with the same name.
@@ -34,7 +28,7 @@ public class Student implements Serializable {
     private static final Logger logger = Logger.getLogger(Student.class.getName());
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue//(strategy = GenerationType.IDENTITY)
     @Column(name = "studentid", nullable = false)
     private Integer id;
 

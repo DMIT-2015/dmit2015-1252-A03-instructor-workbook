@@ -37,8 +37,6 @@
             <scope>test</scope>
         </dependency>
 
-
-
         <!-- MicroProfile Config is for reading configuration information from src/main/resources/META-INF/microprofile-config.properties file. -->
         <dependency>
             <groupId>org.eclipse.microprofile.config</groupId>
@@ -73,8 +71,8 @@
 
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc11</artifactId>
-            <version>23.26.0.0.0</version>
+            <artifactId>ojdbc17</artifactId>
+            <version>23.26.1.0.0</version>
         </dependency>
 
         <dependency>
@@ -92,7 +90,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.7.8</version>
+            <version>42.7.9</version>
         </dependency>
 
         <dependency>
@@ -104,11 +102,11 @@
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
-            <version>3.5.3</version>
+            <version>3.5.7</version>
         </dependency>
 
         <!-- Arquillian allows you to test enterprise code such as EJBs and Transactional(JTA)
-                   JPA from JUnit/TestNG -->
+           JPA from JUnit/TestNG -->
         <dependency>
             <groupId>org.jboss.shrinkwrap.resolver</groupId>
             <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
@@ -172,6 +170,42 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- For IntelliJ IDEA Code Completion to detect project is using Jakarta Faces -->
+        <dependency>
+            <groupId>jakarta.faces</groupId>
+            <artifactId>jakarta.faces-api</artifactId>
+            <version>4.1.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>15.0.13</version>
+            <classifier>jakarta</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>primeflex</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.omnifaces</groupId>
+            <artifactId>omnifaces</artifactId>
+            <version>4.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+            <artifactId>owasp-java-html-sanitizer</artifactId>
+            <version>20260102.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.27.7</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -249,12 +283,26 @@
                 </configuration>
             </plugin>
 
-            <!-- Plugin to run functional tests -->
-            <!--  mvn failsafe:integration-test -->
+            <!-- Plugin to run integration tests (Arquillian) -->
+            <!-- mvn verify -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.5.3</version>
+                <executions>
+                    <execution>
+                        <id>integration-tests</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includes>
+                        <include>**/*IT.java</include>
+                    </includes>
+                </configuration>
             </plugin>
 
 
