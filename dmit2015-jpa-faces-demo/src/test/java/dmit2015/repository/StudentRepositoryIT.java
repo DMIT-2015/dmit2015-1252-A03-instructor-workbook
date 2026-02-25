@@ -37,7 +37,7 @@ public class StudentRepositoryIT {
                 .addAsLibraries(pom.resolve("org.postgresql:postgresql:42.7.8").withTransitivity().asFile())
                 .addAsLibraries(pom.resolve("org.mariadb.jdbc:mariadb-java-client:3.5.3").withTransitivity().asFile())
                 .addAsLibraries(pom.resolve("org.hamcrest:hamcrest:3.0").withTransitivity().asFile())
-                .addAsLibraries(pom.resolve("org.assertj:>assertj-core:3.27.7").withTransitivity().asFile())
+                .addAsLibraries(pom.resolve("org.assertj:assertj-core:3.27.7").withTransitivity().asFile())
                 .addClass(ApplicationConfig.class)
                 .addClasses(Student.class, StudentInitializer.class, StudentRepository.class)
                 .addAsResource("META-INF/persistence.xml")
@@ -52,7 +52,7 @@ public class StudentRepositoryIT {
         // Arrange and Act
         List<Student> students = studentRepository.findAll();
         // Assert
-        assertEquals(33, students.size());
+        assertEquals(3, students.size());
     }
 
 }
