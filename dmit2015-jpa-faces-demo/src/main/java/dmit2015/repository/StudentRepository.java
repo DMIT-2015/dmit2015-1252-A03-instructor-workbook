@@ -30,6 +30,11 @@ select s
 
     }
 
+    public Student findById(Integer id) {
+        return entityManager.find(Student.class, id);
+    }
+
+
     public long count() {
         return entityManager
                 .createQuery("select count(s) from Student s", Long.class)
