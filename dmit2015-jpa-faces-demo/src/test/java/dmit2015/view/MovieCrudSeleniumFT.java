@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class MovieCrudSeleniumIT {
+class MovieCrudSeleniumFT {
 
     private static final String BASE_URL = "http://localhost:8080/movies";
     private static final Duration SHORT_WAIT = Duration.ofSeconds(3);
