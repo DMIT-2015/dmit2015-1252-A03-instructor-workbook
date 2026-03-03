@@ -206,6 +206,26 @@
             <version>3.27.7</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Dependencies for UI Testing using Selenium WebDriver -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>6.3.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>selenium-jupiter</artifactId>
+            <version>6.3.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.40.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -289,6 +309,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.5.3</version>
+<!--                <configuration>-->
+<!--                    <includes>-->
+<!--                        <include>${failsafe.includes}</include>-->
+<!--                    </includes>-->
+<!--                </configuration>-->
                 <executions>
                     <execution>
                         <id>integration-tests</id>
@@ -308,4 +333,24 @@
 
         </plugins>
     </build>
+
+    <profiles>
+
+        <!-- Arquillian Profile -->
+        <profile>
+            <id>arquillian</id>
+            <properties>
+                <failsafe.includes>**/*IT.java</failsafe.includes>
+            </properties>
+        </profile>
+
+        <!-- Functional UI Profile -->
+        <profile>
+            <id>functional</id>
+            <properties>
+                <failsafe.includes>**/*FT.java</failsafe.includes>
+            </properties>
+        </profile>
+
+    </profiles>
 </project>

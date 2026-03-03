@@ -3,7 +3,11 @@ package dmit2015.repository;
 import dmit2015.config.ApplicationConfig;
 import dmit2015.entity.Student;
 import dmit2015.entity.StudentInitializer;
+import jakarta.annotation.Resource;
 import jakarta.inject.Inject;
+import jakarta.transaction.NotSupportedException;
+import jakarta.transaction.SystemException;
+import jakarta.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.container.annotation.ArquillianTest;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -12,8 +16,11 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ArquillianTest
@@ -38,6 +45,7 @@ public class StudentRepositoryIT {
                 .addAsLibraries(pom.resolve("org.mariadb.jdbc:mariadb-java-client:3.5.3").withTransitivity().asFile())
                 .addAsLibraries(pom.resolve("org.hamcrest:hamcrest:3.0").withTransitivity().asFile())
                 .addAsLibraries(pom.resolve("org.assertj:assertj-core:3.27.7").withTransitivity().asFile())
+                .addAsLibraries(pom.resolve("net.datafaker:datafaker:2.5.3").withTransitivity().asFile())
                 .addClass(ApplicationConfig.class)
                 .addClasses(Student.class, StudentInitializer.class, StudentRepository.class)
                 .addAsResource("META-INF/persistence.xml")
@@ -47,12 +55,43 @@ public class StudentRepositoryIT {
     @Inject
     private StudentRepository studentRepository;
 
+    @Resource
+    private UserTransaction userTransaction;
+
     @Test
     void findAll_whenSeed_returnsInExpectedOrder() {
         // Arrange and Act
         List<Student> students = studentRepository.findAll();
         // Assert
         assertEquals(3, students.size());
+    }
+
+    @Test
+    void add_whenValid_persistsAndSetsCreateTime() throws SystemException, NotSupportedException {
+        userTransaction.begin();
+        try {
+            // Arrange
+            Student newStudent = new Student();
+            newStudent.setFirstName("Uncle");
+            newStudent.setLastName("Bob");
+
+            // Act
+            studentRepository.add(newStudent);
+
+            // Assert
+            Student savedStudent = studentRepository.findById(newStudent.getId());
+
+            assertAll("saved student",
+                    () -> assertEquals(newStudent.getFirstName(), savedStudent.getFirstName()),
+                    () -> assertEquals(newStudent.getLastName(), savedStudent.getLastName())
+            );
+
+            long minutesSinceCreate = savedStudent.getCreateTime().until(LocalDateTime.now(), ChronoUnit.MINUTES);
+            assertEquals(0, minutesSinceCreate);
+        } finally {
+            userTransaction.rollback();
+        }
+
     }
 
 }
