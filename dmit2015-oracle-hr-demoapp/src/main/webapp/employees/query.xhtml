@@ -25,13 +25,55 @@
                                         var="dept"
                                         itemLabel="#{dept.departmentName}"
                                         itemValue="#{dept}"
+                                        converter="#{departmentConverter}"
                                         forceSelection="true"
                                         scrollHeight="250"/>
                     </div>
 
+                    <div class="field">
+                        <p:commandButton value="Search By Department" styleClass="col-fixed"
+                                         action="#{employeeQueryView.onSearchByDepartment()}"
+                                         update=":messages :growl @form dataTable"
+                        >
+                        </p:commandButton>
+                    </div>
                 </p:panel>
             </h:form>
         </div>
+
+        <h:form prependId="false" id="outputPanel">
+            <div class="card">
+                <p:dataTable id="dataTable"
+                             value="#{employeeQueryView.queryResults}"
+                             var="currentItem"
+                             reflow="true"
+                             rowKey="#{currentItem.id}"
+                             paginator="true" rows="10"
+                             paginatorPosition="bottom">
+                    <p:column headerText="Name">
+                        <h:outputText value="#{currentItem.firstName} #{currentItem.lastName}" />
+                    </p:column>
+
+                    <p:column headerText="Hire Date">
+                        <h:outputText value="#{currentItem.hireDate}">
+                            <f:convertDateTime type="localDate" pattern="MM/dd/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Salary">
+                        <h:outputText value="#{currentItem.salary}">
+                            <f:convertNumber type="currency" locale="en_CA"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Department">
+                        <h:outputText value="#{currentItem.department.departmentName}">
+                        </h:outputText>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+        </h:form>
     </ui:define>
 
 </ui:composition>

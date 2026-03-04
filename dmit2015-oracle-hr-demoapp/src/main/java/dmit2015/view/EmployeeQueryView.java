@@ -1,6 +1,7 @@
 package dmit2015.view;
 
 import dmit2015.entity.Department;
+import dmit2015.entity.Employee;
 import dmit2015.repository.HumanResourcesRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
@@ -38,6 +39,9 @@ public class EmployeeQueryView implements Serializable {
         return hrRepository.departmentsBy("%" + query + "%");
     }
 
+    @Getter
+    private List<Employee> queryResults;
+
     @PostConstruct // Runs after @Inject fields are initialized (once per view instance)
     public void init() {
         // Initialize view state (avoid heavy I/O here)
@@ -45,12 +49,12 @@ public class EmployeeQueryView implements Serializable {
         // selectedEmployeeQuery = new EmployeeQuery();
     }
 
-    public void onSubmit() {
+    public void onSearchByDepartment() {
         try {
-            // TODO: handle action (e.g., call a service, update state, etc.)
-            // Messages.addGlobalInfo("Saved.");
+            queryResults = hrRepository.employeesByDepartmentId(selectedDepartment.getId());
+            Messages.addGlobalInfo("Query returned {0} results.", queryResults.size());
         } catch (Exception ex) {
-            handleException(ex, "Unable to process your request.");
+            handleException(ex,"Error fetching employees by department");
         }
     }
 
