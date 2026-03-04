@@ -8,9 +8,6 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 @Getter
 @Setter
 @Entity
@@ -41,9 +38,6 @@ public class Location {
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "COUNTRY_ID")
     private Country country;
-
-    @OneToMany(mappedBy = "location")
-    private Set<Department> departments = new LinkedHashSet<>();
 
 
 }
