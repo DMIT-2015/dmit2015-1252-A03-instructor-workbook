@@ -20,7 +20,7 @@ select d
 
     @Query("""
 select e
- from Employee e join fetch e.department
+ from Employee e join fetch e.department join fetch e.manager
  where e.department.id = ?1
 """)
     List<Employee> employeesByDepartmentId(Short deptId);

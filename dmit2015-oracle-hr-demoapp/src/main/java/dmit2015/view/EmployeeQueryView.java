@@ -59,9 +59,8 @@ public class EmployeeQueryView implements Serializable {
     }
 
     public void onClear() {
-        // Reset view state
-
-        // selectedEmployeeQuery = null;
+        queryResults = null;
+        selectedDepartment = null;
     }
 
     /**
