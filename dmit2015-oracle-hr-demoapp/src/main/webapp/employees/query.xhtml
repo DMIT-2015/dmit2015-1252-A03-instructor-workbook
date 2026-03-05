@@ -17,7 +17,6 @@
             <h:form id="query_form" role="form">
                 <p:panel header="Welcome to Employee Query">
                     <!-- Add page-specific content here, e.g., PrimeFaces components -->
-
                     <div class="field col-12 md:col-4">
                         <p:outputLabel value="Department Name" for="@next"/>
                         <p:autoComplete id="dept" value="#{employeeQueryView.selectedDepartment}"
@@ -46,6 +45,27 @@
                         >
                         </p:commandButton>
                     </div>
+
+                    <div class="field col-12 md:col-4">
+                        <p:outputLabel value="Job Title" for="@next"/>
+                        <p:autoComplete id="job" value="#{employeeQueryView.selectedJob}"
+                                        completeMethod="#{employeeQueryView.completeJob}"
+                                        var="job"
+                                        itemLabel="#{job.jobTitle}"
+                                        itemValue="#{job}"
+                                        converter="#{jobConverter}"
+                                        forceSelection="true"
+                                        scrollHeight="250"/>
+                    </div>
+
+                    <div class="field">
+                        <p:commandButton value="Search By Job" styleClass="col-fixed"
+                                         action="#{employeeQueryView.onSearchByJob()}"
+                                         update=":messages :growl @form dataTable"
+                        >
+                        </p:commandButton>
+                    </div>
+
                 </p:panel>
             </h:form>
         </div>
@@ -62,6 +82,10 @@
 
                     <p:column headerText="Name">
                         <h:outputText value="#{currentItem.fullName}" />
+                    </p:column>
+
+                    <p:column headerText="Job Title">
+                        <h:outputText value="#{currentItem.job.jobTitle}" />
                     </p:column>
 
                     <p:column headerText="Hire Date">
