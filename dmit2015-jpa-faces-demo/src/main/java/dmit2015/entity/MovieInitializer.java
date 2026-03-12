@@ -53,32 +53,34 @@ public class MovieInitializer {
     }
 
     private void seedFromCsv(String resourcePath) {
-        try (InputStream in = getClass().getResourceAsStream(resourcePath)) {
-            if (in == null) {
-                LOGGER.warning("Seed CSV not found on classpath: " + resourcePath);
-                return;
-            }
-
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
-                // Skip header row
-                reader.readLine();
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    Optional<Movie> maybeMovie = Movie.parseCsv(line);
-                    if (maybeMovie.isPresent()) {
-                        movieRepository.add(maybeMovie.get());
-                    } else {
-                        LOGGER.fine("Skipping invalid CSV row: " + line);
-                    }
-                }
-            }
-
-            LOGGER.info("Movie seeding complete from " + resourcePath);
-
-        } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, "Failed to seed movies from CSV: " + resourcePath, ex);
-        }
+//        try (InputStream in = getClass().getResourceAsStream(resourcePath)) {
+//            if (in == null) {
+//                LOGGER.warning("Seed CSV not found on classpath: " + resourcePath);
+//                return;
+//            }
+//
+//            try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
+//                // Skip header row
+//                reader.readLine();
+//
+//                String line;
+//                while ((line = reader.readLine()) != null) {
+//                    Optional<Movie> maybeMovie = Movie.parseCsv(line);
+//                    if (maybeMovie.isPresent()) {
+//                        Movie currentMovie = maybeMovie.orElseThrow();
+//                        currentMovie.setUsername("DLEE");
+//                        movieRepository.add(currentMovie);
+//                    } else {
+//                        LOGGER.fine("Skipping invalid CSV row: " + line);
+//                    }
+//                }
+//            }
+//
+//            LOGGER.info("Movie seeding complete from " + resourcePath);
+//
+//        } catch (Exception ex) {
+//            LOGGER.log(Level.SEVERE, "Failed to seed movies from CSV: " + resourcePath, ex);
+//        }
     }
 }
 

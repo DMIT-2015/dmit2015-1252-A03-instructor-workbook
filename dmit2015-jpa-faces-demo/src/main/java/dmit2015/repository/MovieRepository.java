@@ -2,8 +2,10 @@ package dmit2015.repository;
 
 import dmit2015.entity.Movie;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.security.enterprise.SecurityContext;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
@@ -11,12 +13,20 @@ import java.util.Optional;
 
 @ApplicationScoped
 public class MovieRepository {
+
+    @Inject
+    private SecurityContext securityContext;
     
     @PersistenceContext (unitName = "mssql-dmit2015-jpa-pu") // unitName is optional if persistence.xml contains only one persistence-unit
     private EntityManager em;
 
     @Transactional
     public void add(Movie newMovie) {
+        String username = securityContext.getCallerPrincipal().getName();
+        if (username.equalsIgnoreCase("anonymous")) {
+            throw new RuntimeException("Access denied. You must be authenticated to perform this operation.");
+        }
+        newMovie.setUsername(username);
         em.persist(newMovie);
     }
 
@@ -65,7 +75,16 @@ public class MovieRepository {
     }
 
     public List<Movie> findAll() {
-        return em.createQuery("SELECT m FROM Movie m ", Movie.class)
+        String username = securityContext.getCallerPrincipal().getName();
+        if (username.equalsIgnoreCase("anonymous")) {
+            throw new RuntimeException("Access denied. You must be authenticated to perform this operation.");
+        }
+        boolean hasRequiredRoles = securityContext.isCallerInRole("Sales") || securityContext.isCallerInRole("Shipping");
+        if (!hasRequiredRoles) {
+            throw new RuntimeException("Access denied. You do have permission to perform this operation.");
+        }
+        return em.createQuery("SELECT m FROM Movie m WHERE m.username = :usernameValue", Movie.class)
+                .setParameter("usernameValue", username)
                 .getResultList();
     }
 
