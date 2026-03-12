@@ -17,7 +17,7 @@ public class MovieRepository {
     @Inject
     private SecurityContext securityContext;
     
-    @PersistenceContext (unitName = "mssql-dmit2015-jpa-pu") // unitName is optional if persistence.xml contains only one persistence-unit
+    @PersistenceContext //(unitName = "h2database-dmit2015-jpa-pu") // unitName is optional if persistence.xml contains only one persistence-unit
     private EntityManager em;
 
     @Transactional
