@@ -1,6 +1,7 @@
 package dmit2015.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class Region {
     @Column(name = "REGION_ID", nullable = false)
     private Long id;
 
+    @NotBlank(message = "Region Name is required")
     @Size(max = 25)
     @Column(name = "REGION_NAME", length = 25)
     private String regionName;
