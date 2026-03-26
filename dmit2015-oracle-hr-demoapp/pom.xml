@@ -240,6 +240,12 @@
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>5.1.5.Final</version>
                 <configuration>
+
+                    <server-args>
+                        <server-arg>-Djboss.socket.binding.port-offset=10</server-arg>
+                    </server-args>
+                    <port>10000</port>
+
                     <feature-packs>
                         <feature-pack>
                             <location>wildfly@maven(org.jboss.universe:community-universe)#39.0.1.Final</location>
@@ -255,7 +261,7 @@
                             Select the process with the `jboss-module.jar (8787)` name to attach to.
                     -->
                     <debug>true</debug>
-                    <debugPort>8787</debugPort>
+                    <debugPort>8797</debugPort>
                     <debugSuspend>false</debugSuspend>
 
                     <layers>
