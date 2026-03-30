@@ -158,7 +158,6 @@
                         <layer>jsf</layer>
                         <layer>microprofile-config</layer>
                         <layer>microprofile-rest-client</layer>
-                        <layer>microprofile-jwt</layer>
                     </layers>
 
                     <!-- deploys the app on root web context -->
