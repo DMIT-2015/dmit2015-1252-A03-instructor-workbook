@@ -65,7 +65,7 @@ public class StudentCrudView implements Serializable {
         try {
             students = studentService.getAllStudents();
         } catch (Exception e) {
-            Messages.addGlobalError("Error getting students %s", e.getMessage());
+            Messages.addGlobalError("Error getting students {0}", e.getMessage());
         }
     }
 
