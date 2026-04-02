@@ -41,7 +41,7 @@ import java.util.Optional;
  * </code>
  */
 @RequestScoped
-@RegisterProvider(TodoItemRestApiResponseMapper.class)
+@RegisterProvider(BadRequestResponseMapper.class)
 @RegisterProvider(ForbiddenResponseMapper.class)
 @RegisterClientHeaders(AuthHeaderFactory.class)
 @RegisterRestClient(baseUri = "http://localhost:8090/restapi/TodoItemsDto")
